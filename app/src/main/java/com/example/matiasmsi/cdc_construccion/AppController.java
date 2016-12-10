@@ -22,7 +22,7 @@ public class AppController extends Application {
     /**
      * Log or request TAG
      */
-    public static final String TAG = "MiApp";
+    public static final String TAG = "CDC_Construccion2";
 
     /**
      * Image cache size.
