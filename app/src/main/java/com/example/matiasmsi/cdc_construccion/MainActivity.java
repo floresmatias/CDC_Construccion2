@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     EditText etUsuario, etContra;
     Button btnIngresar;
     JSONArray ja;
+    JsonObject jo;
+    JsonPrimitive jp;
 
 
     @Override
@@ -37,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                ConsultaPass("http://192.168.0.2:8084/WebServiceCDC/webresources/generic/Autenticacion?rut="+etUsuario.getText().toString()+"&&clave="+etContra.getText().toString());
-
+                Log.d("hola","estoy en onclick");
+                ConsultaPass("http://192.168.0.2:8080/WebServiceCDC/webresources/generic/Autenticacion?rut="+etUsuario.getText().toString()+"&&"+"clave="+etContra.getText().toString());
+                Log.d("hola","consulte url");
             }
         });
 
@@ -55,19 +60,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                try {
-                    ja = new JSONArray(response);
-                    String contra = ja.getString(0);
-                    Log.d("Respuesta",ja.getString(0));
-                    Intent intent = new Intent(MainActivity.this, Formulario.class);
-                    startActivity(intent);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
-
-                }
-
+                Log.d("hola","try");
+                jp = new JsonPrimitive(response);
+                Log.d("hola","jo"+jp);
 
             }
         }, new Response.ErrorListener() {
@@ -78,8 +73,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
         queue.add(stringRequest);
-
-
-
     }
 }
