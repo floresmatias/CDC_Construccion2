@@ -4,7 +4,6 @@ package com.example.matiasmsi.cdc_construccion;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -20,7 +19,7 @@ import android.widget.Toast;
 import java.text.CollationElementIterator;
 import java.util.Arrays;
 
-//asdasd
+//asdasdadsad
 
 
 public class Formulario extends AppCompatActivity implements View.OnClickListener {
