@@ -1,6 +1,7 @@
 package com.example.matiasmsi.cdc_construccion;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,13 +34,13 @@ import java.util.Arrays;
 public class Receptor extends AppCompatActivity implements View.OnClickListener{
 
     EditText editText;
-    Button btn;
+    Button btn, btn1;
     TextView text;
     JSONArray ja;
     Gson gson = new Gson();
     //ArrayList<String>list = new ArrayList<String>();
     String[] list = new String[6];
-    String[] list1 = new String[6];
+    //String[] list1 = new String[6];
 //45
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
         btn = (Button) findViewById(R.id.btnEnviaId);
         text = (TextView) findViewById(R.id.textViewTarea);
         btn.setOnClickListener(this);
+        btn1 = (Button) findViewById(R.id.btnFormulario);
+        btn1.setOnClickListener(this);
 
     }
 
@@ -95,9 +98,9 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
                                 list[i] = ja.get(i).toString();
                             }
 
-                            
+
                         }
-                        Log.d("hola","lista"+list[1]);
+                      //  Log.d("hola","lista"+list[2]);
                         Toast.makeText(getApplication(),list[0],Toast.LENGTH_SHORT).show();
 
 
@@ -128,9 +131,19 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
                 consultaTarea("http://192.168.0.2:8084/WebServiceCDC/webresources/generic/obtenerTarea?idUsuario=" + editText.getText().toString());
 
 
+                String newString2 = Arrays.toString(list);
+                newString2 = newString2.substring(1,newString2.length()-1);
+                Log.d("hola","lista onclick: "+list);
+                Log.d("hola","lista newString  onclick: "+newString2);
+                Toast.makeText(getApplicationContext(),"List modificada"+ newString2, Toast.LENGTH_SHORT).show();
+                DBNet tareas1 = new DBNet(this, "DBNet", null, 1);
+                SQLiteDatabase db = tareas1.getWritableDatabase();
+                insertar2(newString2,"0");
 
-
-
+                break;
+            case R.id.btnFormulario:
+                Intent intent = new Intent(getApplicationContext(), Formulario.class);
+                startActivity(intent);
                 break;
         }
 
