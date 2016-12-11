@@ -39,6 +39,10 @@ public class Formulario extends AppCompatActivity implements View.OnClickListene
 
     protected void onCreate(final Bundle savedInstanceState) {
         Log.d("hola","estoy en Formulario");
+        Bundle parametro = getIntent().getExtras();
+        if(parametro!=null){
+           Toast.makeText(getApplicationContext(),parametro.getString("idTarea"),Toast.LENGTH_SHORT).show();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.formulario);
         cd = new Pruebared(this);

@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("hola","estoy en onclick");
                 ConsultaPass("http://192.168.0.2:8080/WebServiceCDC/webresources/generic/Autenticacion?rut="+etUsuario.getText().toString()+"&&"+"clave="+etContra.getText().toString());
                 Log.d("hola","consulte url");
+                Intent intent = new Intent(MainActivity.this, Receptor.class);
+                startActivity(intent);
 
 
             }
@@ -65,9 +67,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("hola","try");
                 jp = new JsonPrimitive(response);
                 Log.d("hola","jo"+jp);
+                Intent intent = new Intent(getApplicationContext(), Receptor.class);
+                startActivity(intent);
+
+
                 if(jp!=null){
-                    Intent intent = new Intent(MainActivity.this, Receptor.class);
-                    startActivity(intent);
+
 
                 }else{
                     Toast.makeText(getApplicationContext(),"contraseña o usuario",Toast.LENGTH_SHORT).show();
