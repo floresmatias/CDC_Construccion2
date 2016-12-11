@@ -20,11 +20,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 
 /**
@@ -32,6 +35,7 @@ import java.util.Arrays;
  */
 //77
 public class Receptor extends AppCompatActivity implements View.OnClickListener{
+    LinkedList<Tarea> listaTarea=new LinkedList<Tarea>();
 
     EditText editText;
     Button btn, btn1;
@@ -40,7 +44,9 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
     Gson gson = new Gson();
     //ArrayList<String>list = new ArrayList<String>();
     String[] list = new String[6];
-    //String[] list1 = new String[6];
+    LinkedList<Tarea> list1=new LinkedList<Tarea>() ;
+    Tarea tarea = new Tarea();
+
 //45
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +63,9 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
         btn1 = (Button) findViewById(R.id.btnFormulario);
         btn1.setOnClickListener(this);
 
+
+
     }
-
-
-        private static final String CN_TAREA = "TAREA";
-        private static final String CN_ESTADO = "ESTADO";
-        public void insertar2 (String TAREA, String Estado){
-        DBNet tareas1 = new DBNet(this, "DBNet", null, 1);
-        SQLiteDatabase db = tareas1.getWritableDatabase();
-        ContentValues valores = new ContentValues();
-        valores.put(CN_TAREA, TAREA);
-        valores.put(CN_ESTADO, Estado);
-        db.insert("Tarea", null, valores);
-    }
-
 
 
 
@@ -91,6 +86,24 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
                     Log.d("hola","estoy en else de receptor");
                         //Toast.makeText(getApplicationContext(), "algo malo a pasado", Toast.LENGTH_SHORT).show();
                     text.setText(response);
+                    int e=0;
+                    for (int i=0;i<ja.length();i++){
+                        JSONObject row = ja.getJSONObject(i);
+                       // Tarea ta = new Tarea();
+                        tarea.setId(row.getInt("id"));
+                        tarea.setObra(row.getString("obra"));
+                        tarea.setSector(row.getString("sector"));
+                        tarea.setSubsector(row.getString("subSector"));
+                        tarea.setFormulario(row.getString("formulario"));
+                        list1.add(tarea);
+                        retornaList1(list1,i);
+
+
+                        e=e+1;
+                        //Log.d("hola","soy row"+tarea.getId()+"e= "+e);
+                        Log.d("pruebalist","id= "+list1.get(i).getId());
+                    }
+
                         if(ja!=null){
                             int len=ja.length();
                             for(int i =0;i<len;i++) {
@@ -100,7 +113,11 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
 
 
                         }
-                      //  Log.d("hola","lista"+list[2]);
+                        Log.d("hola","listatarea"+listaTarea);
+                        Log.d("hola","lista try pos 2"+list[1]);
+                        Log.d("hola","lista try pos 2"+list[2]);
+                        Log.d("hola","lista try pos 2"+list[3]);
+                        Log.d("hola","Jarray"+ja);
                         Toast.makeText(getApplication(),list[0],Toast.LENGTH_SHORT).show();
 
 
@@ -130,24 +147,44 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
 
                 consultaTarea("http://192.168.0.2:8084/WebServiceCDC/webresources/generic/obtenerTarea?idUsuario=" + editText.getText().toString());
 
-
-                String newString2 = Arrays.toString(list);
-                newString2 = newString2.substring(1,newString2.length()-1);
-                Log.d("hola","lista onclick: "+list);
-                Log.d("hola","lista newString  onclick: "+newString2);
-                Toast.makeText(getApplicationContext(),"List modificada"+ newString2, Toast.LENGTH_SHORT).show();
-                DBNet tareas1 = new DBNet(this, "DBNet", null, 1);
-                SQLiteDatabase db = tareas1.getWritableDatabase();
-                insertar2(newString2,"0");
-
                 break;
             case R.id.btnFormulario:
-                Intent intent = new Intent(getApplicationContext(), Formulario.class);
+
+
+
+
+
+
+
+
+
+                Intent intent = new Intent(getApplicationContext(), ListaTarea.class);
                 startActivity(intent);
                 break;
         }
 
     }
+
+    public void insertarEnBD(){
+
+    }
+
+        public void retornaList1(LinkedList<Tarea> list1,int i){
+            ConectionBDManager manager = new ConectionBDManager(this);
+
+                int id = list1.get(i).getId();
+                String obra = list1.get(i).getObra();
+                String sector = list1.get(i).getSector();
+                String subsector = list1.get(i).getSubsector();
+                String formulario = list1.get(i).getFormulario();
+
+                manager.insertar(id, obra, sector, subsector, formulario, null);
+
+                //Log.d("hola","tarea insertar"+id);
+                Log.d("listinsert", "id= " + list1.get(i).getId());
+
+
+            }
 
 
     }
