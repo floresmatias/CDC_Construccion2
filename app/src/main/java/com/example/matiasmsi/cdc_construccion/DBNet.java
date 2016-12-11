@@ -12,7 +12,7 @@ import android.view.View;
 public class DBNet extends SQLiteOpenHelper {
 
 
-    public String sqlcreate = "CREATE TABLE Tarea (ID_TAREA INTEGER PRIMARY KEY AUTOINCREMEN,TAREA TEXT,ESTADO INT)";
+    public String sqlcreate = "CREATE TABLE Tarea (ID_TAREA INTEGER PRIMARY KEY AUTOINCREMENT,TAREA TEXT,ESTADO TEXT)";
 
 
     public DBNet(View.OnClickListener context, String name, SQLiteDatabase.CursorFactory factory, int version) {

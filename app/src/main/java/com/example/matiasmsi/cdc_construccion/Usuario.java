@@ -17,6 +17,8 @@ public class Usuario {
     @SerializedName("apellido")
     private String apellido;
 
+
+
     public int getId() {
         return id;
     }
@@ -40,5 +42,8 @@ public class Usuario {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
+
+
+
 
 }

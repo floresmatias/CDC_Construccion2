@@ -42,9 +42,6 @@ public class Formulario extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.formulario);
         cd = new Pruebared(this);
-
-
-
         radioGroup1 = (RadioGroup) findViewById(R.id.group1);
         radioGroup2 = (RadioGroup) findViewById(R.id.group2);
         radioGroup3 = (RadioGroup) findViewById(R.id.group3);
@@ -476,6 +473,8 @@ public class Formulario extends AppCompatActivity implements View.OnClickListene
 
             case  R.id.btnArreglo:
                 String newString = Arrays.toString(respuestas);
+                Log.d("hola","estoy en lista formulario"+respuestas);
+                Log.d("hola","Soy newString"+newString);
                 newString = newString.substring(1,newString.length()-1);
                 Toast.makeText(getApplicationContext(), newString, Toast.LENGTH_SHORT).show();
                 DBPreguntas respuestas1 = new DBPreguntas(this, "DBPreguntas", null, 1);
