@@ -2,9 +2,12 @@ package com.example.matiasmsi.cdc_construccion;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,11 +25,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 
 /**
@@ -39,8 +44,9 @@ public class Receptor extends AppCompatActivity {
     Button btn;
     TextView text;
     JSONArray ja;
-
-
+    Gson gson = new Gson();
+    ArrayList<String>list = new ArrayList<String>();
+//45
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -91,6 +97,14 @@ public class Receptor extends AppCompatActivity {
                     } else {
                         Toast.makeText(getApplicationContext(), "algo malo a pasado", Toast.LENGTH_SHORT).show();
                         text.setText(contra);
+                        if(ja!=null){
+                            int len=ja.length();
+                            for(int i =0;i<len;i++){
+                                list.add(ja.get(i).toString());
+                            }
+                        }
+                        Log.d("hola",""+list);
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -108,6 +122,7 @@ public class Receptor extends AppCompatActivity {
 
         queue.add(stringRequest);
     }
+
 
 
     }
