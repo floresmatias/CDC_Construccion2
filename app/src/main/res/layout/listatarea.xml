@@ -28,4 +28,13 @@
         android:layout_below="@+id/editTextId"
         android:layout_alignParentStart="true"
         android:layout_marginTop="23dp" />
+
+    <Button
+        android:text="Enviar Formulario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnEnviaId"
+        android:layout_toEndOf="@+id/btnEnviaId"
+        android:layout_marginStart="102dp"
+        android:id="@+id/btnFormulario" />
 </RelativeLayout>
