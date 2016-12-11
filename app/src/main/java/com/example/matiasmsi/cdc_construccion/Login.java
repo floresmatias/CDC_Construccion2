@@ -1,32 +1,18 @@
 package com.example.matiasmsi.cdc_construccion;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
 
 
 /**
@@ -36,7 +22,7 @@ import java.util.HashMap;
 
 public class Login extends AppCompatActivity implements Response.ErrorListener,Response.Listener<String> {
 
-    Button btnlogin;
+    Button btnlogin,btntarea;
     EditText usr,psd;
     String usuario , password;
     TextView txtusr;
@@ -54,6 +40,7 @@ public class Login extends AppCompatActivity implements Response.ErrorListener,R
         psd = (EditText) findViewById(R.id.psd);
         btnlogin = (Button) findViewById(R.id.btnlogin);
         txtusr = (TextView) findViewById(R.id.txtusuario);
+        btntarea = (Button) findViewById(R.id.btnTarea) ;
 
         btnlogin.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -63,6 +50,14 @@ public class Login extends AppCompatActivity implements Response.ErrorListener,R
             }
 
 
+        });
+        btntarea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("hola","estoy en btnEnviar");
+                Intent intent = new Intent(getApplicationContext(), Receptor.class);
+                startActivity(intent);
+            }
         });
 
     }
