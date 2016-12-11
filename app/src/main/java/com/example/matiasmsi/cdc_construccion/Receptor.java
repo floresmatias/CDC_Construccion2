@@ -30,7 +30,7 @@ import java.util.Arrays;
  * Created by MatiasMSI on 09/11/2016.
  */
 //77
-public class Receptor extends AppCompatActivity {
+public class Receptor extends AppCompatActivity implements View.OnClickListener{
 
     EditText editText;
     Button btn;
@@ -39,6 +39,7 @@ public class Receptor extends AppCompatActivity {
     Gson gson = new Gson();
     //ArrayList<String>list = new ArrayList<String>();
     String[] list = new String[6];
+    String[] list1 = new String[6];
 //45
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,54 +49,28 @@ public class Receptor extends AppCompatActivity {
         String[] obras = {"Obra1", "Obra2", "Obra3", "Obra4", "Obra5", "Obra6"};
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listatarea);
-
         editText = (EditText) findViewById(R.id.editTextId);
         btn = (Button) findViewById(R.id.btnEnviaId);
         text = (TextView) findViewById(R.id.textViewTarea);
+        btn.setOnClickListener(this);
 
-
-       /* ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, obras);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), Formulario.class);
-                startActivity(intent);            }
-        });**/
-        btn.setOnClickListener(new View.OnClickListener() {
-
-
-
-
-            private static final String CN_TAREA = "TAREA";
-            private static final String CN_ESTADO = "ESTADO";
-            public void insertar2 (String TAREA, String Estado){
-                DBNet tareas1 = new DBNet(this, "DBNet", null, 1);
-                SQLiteDatabase db = tareas1.getWritableDatabase();
-                ContentValues valores = new ContentValues();
-                valores.put(CN_TAREA, TAREA);
-                valores.put(CN_ESTADO, Estado);
-                db.insert("Tarea", null, valores);
-            }
-            @Override
-
-
-
-            public void onClick(View view) {
-                consultaTarea("http://192.168.0.2:8084/WebServiceCDC/webresources/generic/obtenerTarea?idUsuario="+editText.getText().toString());
-
-
-
-                        String newString2 = Arrays.toString(list);
-                        newString2 = newString2.substring(1,newString2.length()-1);
-                        Toast.makeText(getApplicationContext(), newString2, Toast.LENGTH_SHORT).show();
-                        DBNet tareas1 = new DBNet(this, "DBNet", null, 1);
-                        SQLiteDatabase db = tareas1.getWritableDatabase();
-                        insertar2(newString2,"0");
-
-                }
-        });
     }
+
+
+        private static final String CN_TAREA = "TAREA";
+        private static final String CN_ESTADO = "ESTADO";
+        public void insertar2 (String TAREA, String Estado){
+        DBNet tareas1 = new DBNet(this, "DBNet", null, 1);
+        SQLiteDatabase db = tareas1.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        valores.put(CN_TAREA, TAREA);
+        valores.put(CN_ESTADO, Estado);
+        db.insert("Tarea", null, valores);
+    }
+
+
+
+
 
 
     public void consultaTarea(String URL) {
@@ -108,24 +83,24 @@ public class Receptor extends AppCompatActivity {
             public void onResponse(String response) {
 
                 try {
+                    Log.d("hola","estoy en try de receptor");
                     ja = new JSONArray(response);
-                    String contra = ja.getString(0);
-                    if (contra.equals(editText.getText().toString())) {
-                        Toast.makeText(getApplicationContext(), "ok", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(getApplicationContext(), "algo malo a pasado", Toast.LENGTH_SHORT).show();
-                        text.setText(contra);
+                    Log.d("hola","estoy en else de receptor");
+                        //Toast.makeText(getApplicationContext(), "algo malo a pasado", Toast.LENGTH_SHORT).show();
+                    text.setText(response);
                         if(ja!=null){
                             int len=ja.length();
-                            for(int i =0;i<len;i++){
+                            for(int i =0;i<len;i++) {
                                 //list.add(ja.get(i).toString());
                                 list[i] = ja.get(i).toString();
                             }
-                        }
-                        Log.d("hola",""+list);
 
-                    }
+                            
+                        }
+                        Log.d("hola","lista"+list[1]);
+                        Toast.makeText(getApplication(),list[0],Toast.LENGTH_SHORT).show();
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "no hay tareas", Toast.LENGTH_SHORT).show();
@@ -143,6 +118,23 @@ public class Receptor extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.btnEnviaId:
+
+                consultaTarea("http://192.168.0.2:8084/WebServiceCDC/webresources/generic/obtenerTarea?idUsuario=" + editText.getText().toString());
+
+
+
+
+
+                break;
+        }
+
+    }
 
 
     }
