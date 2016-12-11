@@ -37,7 +37,7 @@ import java.util.ArrayList;
 /**
  * Created by MatiasMSI on 09/11/2016.
  */
-
+//77
 public class Receptor extends AppCompatActivity {
 
     EditText editText;
