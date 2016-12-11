@@ -1,18 +1,11 @@
 package com.example.matiasmsi.cdc_construccion;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -30,8 +23,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.net.URL;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -45,7 +37,8 @@ public class Receptor extends AppCompatActivity {
     TextView text;
     JSONArray ja;
     Gson gson = new Gson();
-    ArrayList<String>list = new ArrayList<String>();
+    //ArrayList<String>list = new ArrayList<String>();
+    String[] list = new String[6];
 //45
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +63,37 @@ public class Receptor extends AppCompatActivity {
                 startActivity(intent);            }
         });**/
         btn.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+            private static final String CN_TAREA = "TAREA";
+            private static final String CN_ESTADO = "ESTADO";
+            public void insertar2 (String TAREA, String Estado){
+                DBNet tareas1 = new DBNet(this, "DBNet", null, 1);
+                SQLiteDatabase db = tareas1.getWritableDatabase();
+                ContentValues valores = new ContentValues();
+                valores.put(CN_TAREA, TAREA);
+                valores.put(CN_ESTADO, Estado);
+                db.insert("Tarea", null, valores);
+            }
             @Override
+
+
+
             public void onClick(View view) {
                 consultaTarea("http://192.168.0.2:8084/WebServiceCDC/webresources/generic/obtenerTarea?idUsuario="+editText.getText().toString());
 
-            }
+
+
+                        String newString2 = Arrays.toString(list);
+                        newString2 = newString2.substring(1,newString2.length()-1);
+                        Toast.makeText(getApplicationContext(), newString2, Toast.LENGTH_SHORT).show();
+                        DBNet tareas1 = new DBNet(this, "DBNet", null, 1);
+                        SQLiteDatabase db = tareas1.getWritableDatabase();
+                        insertar2(newString2,"0");
+
+                }
         });
     }
 
@@ -100,7 +119,8 @@ public class Receptor extends AppCompatActivity {
                         if(ja!=null){
                             int len=ja.length();
                             for(int i =0;i<len;i++){
-                                list.add(ja.get(i).toString());
+                                //list.add(ja.get(i).toString());
+                                list[i] = ja.get(i).toString();
                             }
                         }
                         Log.d("hola",""+list);

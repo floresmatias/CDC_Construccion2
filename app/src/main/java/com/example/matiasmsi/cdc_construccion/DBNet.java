@@ -3,6 +3,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.view.View;
 
 /**
  * Created by MatiasMSI on 18/11/2016.
@@ -11,11 +12,11 @@ import android.util.Log;
 public class DBNet extends SQLiteOpenHelper {
 
 
-    public String sqlcreate = "CREATE TABLE Tarea (Id INTEGER PRIMARY KEY AUTOINCREMENT, ID_REG INTEGER, INSPECTOR TEXT, OBR TEXT, SECTOR TEXT, SUBSECTOR TEXT,T_FORMULARIO TEXT , ESTADO INTEGER)";
+    public String sqlcreate = "CREATE TABLE Tarea (ID_TAREA INTEGER PRIMARY KEY AUTOINCREMEN,TAREA TEXT,ESTADO INT)";
 
 
-    public DBNet(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public DBNet(View.OnClickListener context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super((Context) context, name, factory, version);
         Log.d("hola", "estoy en bdnet");
     }
 
