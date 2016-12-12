@@ -10,14 +10,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Usuario {
 
-    @SerializedName("id")
-    private int id;
-    @SerializedName("nombre")
-    private String nombre;
-    @SerializedName("apellido")
-    private String apellido;
-
-
+    int id;
+    String nombre;
+    String apellido;
 
     public int getId() {
         return id;
@@ -42,8 +37,4 @@ public class Usuario {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-
-
-
-
 }

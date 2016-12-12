@@ -1,40 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
-//listatarea
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editTextId" />
+    //listatarea
 
 
     <TextView
         android:text="Tareasi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewTarea"
-        android:layout_below="@+id/btnEnviaId"
+        android:id="@+id/txtTarea"
+        android:layout_below="@+id/btnRefresca"
         android:layout_alignParentStart="true"
         android:layout_marginTop="45dp" />
 
     <Button
-        android:text="enviar"
+        android:text="Cargar Formularios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnEnviaId"
-        android:layout_below="@+id/editTextId"
+        android:id="@+id/btnRefresca"
         android:layout_alignParentStart="true"
         android:layout_marginTop="23dp" />
 
-    <Button
-        android:text="Enviar Formulario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnEnviaId"
-        android:layout_toEndOf="@+id/btnEnviaId"
-        android:layout_marginStart="102dp"
-        android:id="@+id/btnFormulario" />
 </RelativeLayout>

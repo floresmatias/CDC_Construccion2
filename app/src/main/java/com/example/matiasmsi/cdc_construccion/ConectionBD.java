@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class ConectionBD extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "listatarea.sqlite";
+    private static final String DB_NAME = "VistaTarea";
     private static final int DB_SCHEME_VERSION = 1;
 
     public ConectionBD(Context context) {

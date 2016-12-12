@@ -1,8 +1,6 @@
 package com.example.matiasmsi.cdc_construccion;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,13 +18,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 
 
@@ -56,12 +52,11 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
         String[] obras = {"Obra1", "Obra2", "Obra3", "Obra4", "Obra5", "Obra6"};
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listatarea);
-        editText = (EditText) findViewById(R.id.editTextId);
-        btn = (Button) findViewById(R.id.btnEnviaId);
-        text = (TextView) findViewById(R.id.textViewTarea);
+        //editText = (EditText) findViewById(R.id.editTextId);
+        btn = (Button) findViewById(R.id.btnRefresca);
+        text = (TextView) findViewById(R.id.txtTarea);
         btn.setOnClickListener(this);
-        btn1 = (Button) findViewById(R.id.btnFormulario);
-        btn1.setOnClickListener(this);
+        consultaTarea("http://192.168.0.2:8084/WebServiceCDC/webresources/generic/obtenerTarea?idUsuario=2");
 
 
 
@@ -81,6 +76,8 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
             public void onResponse(String response) {
 
                 try {
+
+
                     Log.d("hola","estoy en try de receptor");
                     ja = new JSONArray(response);
                     Log.d("hola","estoy en else de receptor");
@@ -118,7 +115,7 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
                         Log.d("hola","lista try pos 2"+list[2]);
                         Log.d("hola","lista try pos 2"+list[3]);
                         Log.d("hola","Jarray"+ja);
-                        Toast.makeText(getApplication(),list[0],Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getApplication(),list[0],Toast.LENGTH_SHORT).show();
 
 
                 } catch (JSONException e) {
@@ -143,23 +140,13 @@ public class Receptor extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.btnEnviaId:
+            case R.id.btnRefresca:
 
-                consultaTarea("http://192.168.0.2:8084/WebServiceCDC/webresources/generic/obtenerTarea?idUsuario=" + editText.getText().toString());
-
-                break;
-            case R.id.btnFormulario:
-
-
-
-
-
-
-
-
+                consultaTarea("http://192.168.0.2:8084/WebServiceCDC/webresources/generic/obtenerTarea?idUsuario=2");
 
                 Intent intent = new Intent(getApplicationContext(), ListaTarea.class);
                 startActivity(intent);
+
                 break;
         }
 

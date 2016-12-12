@@ -6,12 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * Created by matiasmsi on 11/12/2016.
  */
 
 public class ConectionBDManager {
-    public static final  String TABLE_NAME ="listatarea";
+    public static final  String TABLE_NAME ="ListaWs";
 
     public static final String CN_IDFORMU = "_id";
     public static final String CN_IDTAREA = "id";
@@ -66,6 +68,10 @@ public class ConectionBDManager {
         Log.d("hola","estoy en Cargadatos");
         String[] columnas = new String[]{CN_IDFORMU,CN_IDTAREA,CN_OBRA,CN_SECTOR,CN_SUBSECTOR,CN_FORMULARIO,CN_ESTADO};
         return dblite.query(TABLE_NAME,columnas,null,null,null,null,null);
+
+
     }
+
+
 
 }

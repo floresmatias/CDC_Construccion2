@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.style.LeadingMarginSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +27,9 @@ public class ListaTarea extends AppCompatActivity{
     private ConectionBDManager manager;
     private ListView lista;
     SimpleCursorAdapter adapter;
+    ArrayList<String>list;
+    ArrayAdapter adapterarray;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,27 +38,25 @@ public class ListaTarea extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.llistabd);
 
-        manager = new ConectionBDManager(this);
+       manager = new ConectionBDManager(this);
         lista = (ListView) findViewById(R.id.listbd);
-        final String[] from = new String[]{manager.CN_IDTAREA,manager.CN_OBRA};
+        final String[] from = new String[]{manager.CN_SECTOR,manager.CN_FORMULARIO};
         int[]to = new int []{android.R.id.text1,android.R.id.text2};
         cursor = manager.cargarDatosTareas();
-
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, (List<String>) cursor);
-
         adapter = new SimpleCursorAdapter(this,android.R.layout.two_line_list_item,cursor,from,to,0);
        //SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,android.R.layout.simple_expandable_list_item_1,);
+         adapter.notifyDataSetChanged();
+
         lista.setAdapter(adapter);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                int lis = Integer.parseInt((String) lista.getItemAtPosition(position));
-               String valorid =  adapterView.getTransitionName();
+
+              // String valorid =  adapterView.getSelectedItem().toString();
                 Intent intent = new Intent(getApplicationContext(), Formulario.class);
                 startActivity(intent);
-                intent.putExtra("idTarea",valorid);
-                Toast.makeText(getApplicationContext(),lis,Toast.LENGTH_SHORT).show();
-                //TextView textView= (TextView) view.findViewById(R.layout.llistabd);
+               // intent.putExtra("idTarea",valorid);
+
 
 
             }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +21,9 @@ import com.google.gson.JsonPrimitive;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
     EditText etUsuario, etContra;
@@ -27,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
     JSONArray ja;
     JsonObject jo;
     JsonPrimitive jp;
-
+    Usuario usr = new Usuario();
+    LinkedList<Usuario> list1=new LinkedList<Usuario>();
+    TextView text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +44,16 @@ public class MainActivity extends AppCompatActivity {
         etUsuario = (EditText)findViewById(R.id.etUsuario);
         etContra = (EditText)findViewById(R.id.etContra);
         btnIngresar = (Button)findViewById(R.id.btnIngresar);
+        text = (TextView) findViewById(R.id.txtLogin);
 
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Log.d("hola","estoy en onclick");
-                ConsultaPass("http://192.168.0.2:8080/WebServiceCDC/webresources/generic/Autenticacion?rut="+etUsuario.getText().toString()+"&&"+"clave="+etContra.getText().toString());
+                ConsultaPass ("http://192.168.0.2:8084/WebServiceCDC/webresources/generic/Autenticacion?rut="+etUsuario.getText().toString()+"&&"+"clave="+etContra.getText().toString());
                 Log.d("hola","consulte url");
-                Intent intent = new Intent(MainActivity.this, Receptor.class);
-                startActivity(intent);
+
 
 
             }
@@ -60,22 +67,52 @@ public class MainActivity extends AppCompatActivity {
         Log.i("url",""+URL);
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest =  new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.d("hola","estoy en Response LOgin");
+                text.setText(response);
 
-                Log.d("hola","try");
-                jp = new JsonPrimitive(response);
-                Log.d("hola","jo"+jp);
-                Intent intent = new Intent(getApplicationContext(), Receptor.class);
-                startActivity(intent);
+                try {
+                    Log.d("hola","estoy en try logn");
+                    if(text.length()>35){
+                        Intent intent = new Intent(getApplicationContext(), Receptor.class);
+                        startActivity(intent);
+                        Log.d("hola","Estoy en if");
+
+                    }else{
+                        Toast.makeText(getApplicationContext(),"login malo",Toast.LENGTH_SHORT).show();
+                    }
+                    ja = new JSONArray(response);
+                    Log.d("hola","Json array"+response.toString());
+                    for (int i=0;i<ja.length();i++){
+                        Log.d("hola","estoy en for login");
+                        JSONObject row = ja.getJSONObject(i);
+                        usr.setId(row.getInt("id"));
+                        usr.setNombre(row.getString("nombre"));
+                        usr.setApellido(row.getString("apellido"));
+                        list1.add(usr);
+                        retornaList1(list1,i);
+
+                    }
 
 
-                if(jp!=null){
+
+                    if (ja!=null) {
+                        Log.d("hola","estoy en if de login");
 
 
-                }else{
-                    Toast.makeText(getApplicationContext(),"contraseña o usuario",Toast.LENGTH_SHORT).show();
+
+
+                    } else {
+                        Log.d("hola","prueba login");
+
+                    }
+
+
+                } catch (JSONException e) {
+                    Log.d("hola","Estoy en excepcion");
+                    e.printStackTrace();
                 }
 
             }
@@ -85,7 +122,35 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         queue.add(stringRequest);
+
+
     }
+
+    public void retornaList1(LinkedList<Usuario> list1,int i){
+        Log.d("hola","estoy en retorna");
+
+        int id = list1.get(i).getId();
+        String nombre = list1.get(i).getNombre();
+        String aperllido = list1.get(i).getApellido();
+        if(id>0){
+
+
+
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),"login malo",Toast.LENGTH_SHORT).show();
+        }
+
+
+        //Log.d("hola","tarea insertar"+id);
+        Log.d("listinsert", "id= " + list1.get(i).getId());
+
+
+    }
+
+
+
+
 }
